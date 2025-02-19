@@ -1,55 +1,38 @@
-import { useState, FormEvent, ChangeEvent } from "react";
-
-import Auth from '../utils/auth';
+import { useState } from "react";
 import { login } from "../api/authAPI";
+import AuthService from "../utils/auth";
 
 const Login = () => {
-  const [loginData, setLoginData] = useState({
-    username: '',
-    password: ''
-  });
+  const [formData, setFormData] = useState({ username: "", password: "" });
+  const [error, setError] = useState<string | null>(null);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setLoginData({
-      ...loginData,
-      [name]: value
-    });
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setError(null);
+
     try {
-      const data = await login(loginData);
-      Auth.login(data.token);
+      const data = await login(formData);
+      AuthService.login(data.token); // ✅ Calls AuthService to store token & redirect
     } catch (err) {
-      console.error('Failed to login', err);
+      setError("Invalid username or password.");
     }
   };
 
   return (
-    <div className='container'>
-      <form className='form' onSubmit={handleSubmit}>
-        <h1>Login</h1>
-        <label >Username</label>
-        <input 
-          type='text'
-          name='username'
-          value={loginData.username || ''}
-          onChange={handleChange}
-        />
-      <label>Password</label>
-        <input 
-          type='password'
-          name='password'
-          value={loginData.password || ''}
-          onChange={handleChange}
-        />
-        <button type='submit'>Submit Form</button>
+    <div>
+      <h2>Login</h2>
+      {error && <p className="error">{error}</p>}
+      <form onSubmit={handleSubmit}>
+        <input type="text" name="username" placeholder="Username" onChange={handleChange} />
+        <input type="password" name="password" placeholder="Password" onChange={handleChange} />
+        <button type="submit">Login</button>
       </form>
     </div>
-    
-  )
+  );
 };
 
 export default Login;
