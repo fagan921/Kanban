@@ -35,13 +35,34 @@ The application is built with:
 🛠️ Installation & Setup
 
 1️⃣ Clone the Repository
-git clone https://github.com/YOUR_GITHUB_USERNAME/Kanban-Board.git
-cd Kanban-Board
 
 2️⃣ Install Dependencies
 
-Run this command in the project root:
-
 3️⃣ Set Up Environment Variables
 
-Create a .env file inside the server directory and add:
+	Create a .env file inside the server directory and add:
+
+ 4️⃣ Start the Server & Client
+
+ 	npm run start:dev
+
+  🌍 Deployment
+
+🔵 Backend (Server)
+
+The server is deployed on Render, and the PostgreSQL database is hosted on Render as well.
+
+🟢 Frontend (Client)
+
+The frontend is deployed on Netlify, making it accessible via a live URL.
+
+📌 Future Enhancements
+
+🔹 Add sorting & filtering to organize tickets by priority or due date
+🔹 Implement drag-and-drop for a smoother Kanban experience
+🔹 Add user roles (e.g., Admin, Developer) for better permissions control
+🔹 Improve error handling & UI feedback
+
+📜 License
+
+This project is open-source and free to use. Feel free to fork and contribute!
